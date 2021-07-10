@@ -86,7 +86,6 @@ function Board() {
 
   useEffect(() => {
     checkWinner()
-    checkIfDraw()
 
     if (isFirstPlay) {
       setPlayer("X")
@@ -99,14 +98,17 @@ function Board() {
   }, [board]);
 
   useEffect(() => {
+
     if (gameResult.winner !== "none") {
       setTimeout( () => {
         resetGame()
       }, 2000)
     }
+
   }, [gameResult])
 
   const choosedSquare = square => {
+
     setBoard(
       board.map( (position, index) => {
         if (index === square && position === "") {
@@ -115,7 +117,9 @@ function Board() {
         return position
       })
     )
+
     setIsFirstPlay(false)
+
   }
 
   const checkWinner = () => {
@@ -142,7 +146,7 @@ function Board() {
           isFoundWinningPattern = false
         }
       })
-      
+
       if (isFoundWinningPattern) {
         setGameResult({ winner: player })
         setIsBoardDisable(true)
@@ -150,24 +154,9 @@ function Board() {
       }
       
     })
+
   }
   
-  const checkIfDraw = () => {
-    
-    let isSquaresFilled = true
-    board.forEach( square => {
-      if (square === "")
-      isSquaresFilled = false
-    })
-    
-    if (isSquaresFilled) {
-      setGameResult({ winner: "It's a draw!"})
-      setIsBoardDisable(true)
-      setIsFirstPlay(true)
-    }
-
-  }
-
   const resetGame = () => {
     setBoard(["", "", "", "", "", "", "", "", ""])
     setIsFirstPlay(true)
